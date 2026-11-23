@@ -1,0 +1,30 @@
+﻿# Dependencias
+node_modules/
+
+# Compilados y builds
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variables de entorno y secretos (NUNCA subir)
+.env
+.env.*
+!.env.example
+
+# Configuracion de IDE y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Configuracion local personal del agente
+.claude/settings.local.json
+
+# Bases de datos locales
+*.sqlite
+*.db
