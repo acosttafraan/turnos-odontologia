@@ -207,7 +207,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 - **Estado**: `[-]` retirado. La API pasa a `crear-turno-sin-solapamientos` (C-07) y la persistencia duradera a `persistencia-duradera` (C-20).
 
 ### [C-10] `cancelar-turno-y-liberar-horario`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado por Stefano el 2026-11-25: 20/20 tasks y `node --test` con 59 pruebas en verde. Archivado en `openspec/changes/archive/2026-11-25-cancelar-turno-y-liberar-horario/`, con la spec principal en `openspec/specs/cancelacion-de-turnos/`. Entra a `master` por PR, que revisa Francisco.
 - **Resultado**: `POST /api/v1/turnos/{id}/cancelar` deja el turno `CANCELADO` (`EN_TERMINO` o `TARDIA`) y el horario queda libre para un turno nuevo. Los tests de cada escenario están en verde.
 - **Depende de**: C-07
 - **Zona**: src/agenda/cancelar-turno.ts, src/api/turnos.ts, tests/agenda/, tests/api/, openspec/
