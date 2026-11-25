@@ -4,7 +4,8 @@ import { ErrorHttp, respuestaError } from './errores.ts';
 
 export const LIMITE_JSON = 16 * 1024;
 
-type Respuesta = { estado: number; cuerpo: unknown };
+type Respuesta = { estado: number; cuerpo: unknown; tipo?: undefined } |
+  { estado: number; cuerpo: string; tipo: string };
 type Manejador = (solicitud: IncomingMessage, url: URL) => Respuesta | Promise<Respuesta>;
 
 export async function leerJson(solicitud: IncomingMessage): Promise<unknown> {
@@ -40,10 +41,10 @@ export function crearRouter() {
       resultado = respuestaError(error);
     }
 
-    respuesta.setHeader('Content-Type', 'application/json; charset=utf-8');
+    respuesta.setHeader('Content-Type', resultado.tipo ?? 'application/json; charset=utf-8');
     if (resultado.estado === 413) respuesta.setHeader('Connection', 'close');
     respuesta.writeHead(resultado.estado);
-    respuesta.end(JSON.stringify(resultado.cuerpo));
+    respuesta.end(resultado.tipo === undefined ? JSON.stringify(resultado.cuerpo) : resultado.cuerpo);
   });
 
   return {
