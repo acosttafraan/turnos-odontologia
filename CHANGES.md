@@ -99,7 +99,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 
 | Funcionalidad imprescindible (D.3) | Change | Situación |
 |---|---|---|
-| Crear turno sin solapamientos | `crear-turno-sin-solapamientos` | TP, Francisco |
+| Consultar disponibilidad por prestación y reservar sin solapamientos | `crear-turno-sin-solapamientos` | TP, Francisco |
 | Cancelar liberando el horario | `cancelar-turno-y-liberar-horario` | TP, Stefano |
 | Reprogramar | `reprogramar-turno` | TP, Martina |
 | Vista diaria | `pantalla-agenda-diaria` | TP, Maximiliano |
@@ -111,7 +111,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 | **Diferenciador**: recordatorio WhatsApp `wa.me` | `recordatorio-whatsapp-wame` | Backlog |
 | Vista semanal | `frontend-acciones-de-turno` / extensión de `pantalla-agenda-diaria` | Backlog |
 
-**Excluido a propósito**: nada de lo que D.3 dejó para etapas posteriores tiene change. Eso incluye turnero online, WhatsApp Business API, Mercado Pago, ARCA, obras sociales, odontograma, varios profesionales o sillones, lista de espera, sobreturnos y reportes.
+**Excluido a propósito**: nada de lo que D.3 dejó para etapas posteriores tiene change. Eso incluye la publicación del turnero online y su pantalla pública, WhatsApp Business API, Mercado Pago, ARCA, obras sociales, odontograma, varios profesionales o sillones, lista de espera, sobreturnos y reportes. C-07 cubre el flujo de reserva mediante la API local con datos ficticios.
 
 **Habilitantes fuera de D.3**:
 - `acceso-autenticacion`: obligatorio antes de usar datos reales (DD-15).
@@ -122,7 +122,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 
 | Riesgo | Changes | Mitigación |
 |---|---|---|
-| `crear-turno-sin-solapamientos` bloquea a los otros tres, y además ahora incluye el proyecto base | C-07 | Es la única tarea de Francisco y su primera prioridad. Alcance mínimo: tipos, `transicionarEstado`, puertos, semilla, `POST /turnos` y `GET /turnos?fecha=`. Mientras tanto, los otros tres hacen explore y propose, que no necesitan código |
+| `crear-turno-sin-solapamientos` bloquea a los otros tres, y además ahora incluye el proyecto base | C-07 | Es la única tarea de Francisco y su primera prioridad. Incluye tipos, `transicionarEstado`, puertos y semilla, además de `GET /api/v1/disponibilidad`, `POST /api/v1/turnos` y `GET /api/v1/turnos?fecha=`. Mientras tanto, los otros tres hacen explore y propose |
 | Poco tiempo de entrega | Todos | Un solo change por persona (DD-17). Nada del backlog entra al TP |
 | Conflictos de merge en `src/agenda/` (tipos `Turno` y transiciones de estado) | C-07, C-10, C-11 | C-07 define `transicionarEstado` (RN-TU-08) y el puerto del repositorio. Cancelar y reprogramar solo **agregan** archivos nuevos (`cancelar-turno.ts`, `reprogramar-turno.ts`) |
 | Reprogramar necesita "cancelar en término" el turno original sin depender de C-10 | C-11 | Usa `transicionarEstado(turno, 'CANCELADO', { tipo: 'EN_TERMINO' })` de C-07, no el caso de uso de Stefano |
@@ -149,7 +149,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 
 ### [C-07] `crear-turno-sin-solapamientos`
 - **Estado**: `[ ]` pendiente
-- **Resultado**: siguiendo el `README.md`, `node src/main.ts` levanta la app. `POST /api/v1/turnos` crea un turno `RESERVADO` o rechaza con 409/422 y el código RN, y `GET /api/v1/turnos?fecha=` lista los turnos del día. `node --test` está en verde con un test por escenario del spec.
+- **Resultado**: siguiendo el `README.md`, `node src/main.ts` levanta la API local. El paciente consulta horarios por fecha y prestación con `GET /api/v1/disponibilidad` y confirma con `POST /api/v1/turnos`. El POST vuelve a validar el horario y crea un turno `RESERVADO` o rechaza con 409/422 y el código RN cuando corresponda. `GET /api/v1/turnos?fecha=` lista la agenda del día. `node --test` está en verde con un test por escenario del spec.
 - **Depende de**: ninguna
 - **Zona**: package.json, README.md, .env.example, src/main.ts, src/agenda/, src/infra/, src/api/, tests/agenda/, tests/api/, openspec/
 - **Requiere**: claude o codex · node >= 22.18 · windows y linux
@@ -164,8 +164,8 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
     - `src/api/errores.ts`: traduce `ReglaNegocioError` a 409/422 con `{ codigo, mensaje, detalle }`.
     - `src/agenda/reloj.ts`: el reloj inyectable.
     - `GET /api/v1/health`, `.env.example` sin secretos.
-  - **README inicial** (absorbe una parte de C-19): requisitos (Node, sin `npm install`), cómo levantar la app y cómo correr `node --test`. Deja una sección "Cómo probar cada change" que completan los demás.
-  - Decidir PA-12 (chequeo de tipos) y PA-16 (versión mínima de Node) en el explore y registrarlo en `design.md`.
+  - **README inicial** (absorbe una parte de C-19): requisitos (Node, sin `npm install`), cómo levantar la app, consultar disponibilidad, confirmar una reserva, listar la agenda diaria y correr `node --test`. Deja una sección "Cómo probar cada change" que completan los demás.
+  - `design.md` registra PA-12 (cero dependencias y verificación con `node --test`) y PA-16 (Node 22.18.0 o superior sin flag).
   - `src/agenda/tipos.ts`: tipos `Turno`, `EstadoTurno`, `TipoCancelacion`, `FranjaHorario`, `Bloqueo`, `Prestacion`, `Paciente` (uniones de literales, sin `enum`).
   - `src/agenda/intervalo.ts`: `Intervalo` semiabierto `[inicio, fin)` y `seSuperponen(a, b)` (DD-07).
   - `src/agenda/estado.ts`: `transicionarEstado(turno, destino, opciones?)` según RN-TU-08. Lo **reutilizan** cancelar y reprogramar.
@@ -173,15 +173,17 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
   - `src/agenda/crear-turno.ts`: valida en este orden:
     1. RN-TU-07: el paciente existe y la prestación está activa.
     2. RN-TU-04: no se puede crear en el pasado.
-    3. RN-TU-05 y RN-TU-06: duración y fin calculado.
-    4. RN-TU-02: entra en una sola franja.
+    3. RN-TU-05 y RN-TU-06: toma la duración configurada para la prestación y calcula el fin. El paciente solo elige prestación y horario.
+    4. RN-TU-02: entra en una sola franja. El inicio debe corresponder a un horario generado para la prestación.
     5. RN-TU-03: no choca con bloqueos.
     6. RN-TU-01: no se superpone con turnos activos.
 
     Después **guarda sin ningún `await` entre la verificación y el guardado** (RN-TU-10).
-  - `src/infra/memoria.ts` y `src/infra/semilla.ts`: repositorios `Map` con datos ficticios (consultorio, franjas de lunes a viernes 9-13 y 15-19, 5 prestaciones, 3 pacientes y 1 bloqueo de ejemplo).
-  - `src/api/turnos.ts`: `POST /api/v1/turnos` → 201, 409 o 422. `GET /api/v1/turnos?fecha=AAAA-MM-DD` devuelve la lista ordenada por inicio, con paciente, prestación y estado.
-  - Tests mínimos, uno por escenario y con el código RN en el nombre:
+  - `src/infra/memoria.ts` y `src/infra/semilla.ts` usan repositorios `Map` y una configuración ficticia precargada. La demo tiene un consultorio, una franja de 08:00 a 16:00 por día hábil, «Consulta general» de 20 minutos, tres pacientes y un bloqueo de ejemplo.
+  - `GET /api/v1/disponibilidad?fecha=AAAA-MM-DD&prestacionId=...` devuelve los intervalos futuros que caben en una franja, en pasos de la duración de la prestación desde la apertura y sin solaparse con turnos activos o bloqueos. En un día libre, «Consulta general» ofrece de 08:00 a 15:40.
+  - `src/api/turnos.ts` confirma con `POST /api/v1/turnos` y responde 201, 409 o 422. Si el horario ya está ocupado indica elegir otro. `GET /api/v1/turnos?fecha=AAAA-MM-DD` devuelve la agenda diaria ordenada por inicio, con paciente, prestación y estado.
+  - El panel de configuración del odontólogo y la pantalla pública de reserva quedan para cambios posteriores.
+  - Tests mínimos, uno por escenario y con el código RN en el nombre cuando corresponda:
     - caso feliz;
     - **solapamiento** → `RN-TU-01`;
     - **borde**: un turno que empieza exactamente cuando termina otro es válido;
@@ -190,13 +192,15 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
     - en el pasado → `RN-TU-04`;
     - un turno cancelado no bloquea;
     - prestación inactiva → `RN-TU-07`;
-    - **dos POST concurrentes solapados**: uno da 201 y el otro 409.
+    - disponibilidad por prestación en intervalos de 20 minutos, filtrando turnos activos y bloqueos;
+    - **cierre de la franja**: 15:40 se acepta con fin a las 16:00 y una reserva que pasaría de las 16:00 se rechaza;
+    - **dos pacientes intentan reservar el mismo horario**: un 201, un 409 con indicación de elegir otro horario y una sola reserva guardada.
   - `proposal.md` justifica la elección y que la regla es solo por profesional (IN-01).
 - **Leer antes**:
   - `knowledge-base/05_reglas_de_negocio.md` §RN-TU
-  - `knowledge-base/07_flujos_principales.md` §F-02
+  - `knowledge-base/07_flujos_principales.md` §F-02 para el caso de uso de alta. El spec de C-07 define el contrato de reserva del paciente.
   - `knowledge-base/06_funcionalidades.md` §US-030, §US-031
-  - `knowledge-base/04_modelo_de_datos.md` §Turno, §Datos semilla ficticios
+  - `knowledge-base/04_modelo_de_datos.md` §Turno. La configuración de demo para C-07 es la indicada en esta ficha.
   - `knowledge-base/10_preguntas_abiertas.md` §IN-01
 
 ### [C-09] `turnos-api-y-persistencia`

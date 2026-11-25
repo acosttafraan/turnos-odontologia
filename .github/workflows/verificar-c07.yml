@@ -1,0 +1,141 @@
+name: Verificar C-07
+
+on:
+  push:
+    branches:
+      - C-07-crear-turno-sin-solapamientos
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Descargar el código de la rama
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Preparar Node.js 22.18.0
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.18.0'
+          package-manager-cache: false
+
+      - name: Ejecutar las pruebas automatizadas
+        run: |
+          test "$(node --version)" = "v22.18.0"
+          node --test
+
+      - name: Comprobar el arranque y los ejemplos del README
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { spawn } from 'node:child_process';
+          import { once } from 'node:events';
+          import { setTimeout as esperar } from 'node:timers/promises';
+
+          const base = 'http://127.0.0.1:3000/api/v1';
+          const servidor = spawn(process.execPath, ['src/main.ts'], {
+            env: { ...process.env, HOST: '127.0.0.1', PORT: '3000' },
+            stdio: 'inherit',
+          });
+          const salida = once(servidor, 'exit');
+
+          async function consultar(ruta, opciones) {
+            const respuesta = await fetch(base + ruta, {
+              ...opciones, signal: AbortSignal.timeout(1000),
+            });
+            return { estado: respuesta.status, cuerpo: await respuesta.json() };
+          }
+
+          async function esperarSalud() {
+            for (let intento = 0; intento < 50; intento++) {
+              if (servidor.exitCode !== null || servidor.signalCode !== null) {
+                throw new Error('El servidor terminó antes de responder.');
+              }
+              let salud;
+              try {
+                salud = await consultar('/health');
+              } catch (error) {
+                if (error.cause?.code !== 'ECONNREFUSED') throw error;
+                await esperar(100);
+                continue;
+              }
+              assert.deepEqual(salud, { estado: 200, cuerpo: { estado: 'ok' } });
+              return;
+            }
+            throw new Error('El servidor no respondió a /health.');
+          }
+
+          function fechaHabilSinBloqueo() {
+            const hoy = new Intl.DateTimeFormat('sv-SE', {
+              timeZone: 'America/Argentina/Buenos_Aires',
+              year: 'numeric', month: '2-digit', day: '2-digit',
+            }).format(Date.now());
+            const mediodia = Date.parse(hoy + 'T12:00:00Z');
+            let habiles = 0;
+            // La semilla bloquea un intervalo del primer día hábil futuro.
+            for (let dias = 1; dias <= 7; dias++) {
+              const fecha = new Date(mediodia + dias * 86_400_000);
+              const dia = fecha.getUTCDay();
+              if (dia >= 1 && dia <= 5 && ++habiles === 2) {
+                return fecha.toISOString().slice(0, 10);
+              }
+            }
+            throw new Error('No se encontró un segundo día hábil futuro.');
+          }
+
+          try {
+            await esperarSalud();
+            const fecha = fechaHabilSinBloqueo();
+            const hora = hhmm => fecha + 'T' + hhmm + ':00-03:00';
+            const rutaAgenda = '/turnos?fecha=' + fecha;
+            const disponibilidad = await consultar(
+              '/disponibilidad?fecha=' + fecha + '&prestacionId=consulta-general',
+            );
+            assert.equal(disponibilidad.estado, 200);
+            assert.equal(disponibilidad.cuerpo.length, 24);
+            assert.deepEqual(disponibilidad.cuerpo[0], { inicio: hora('08:00'), fin: hora('08:20') });
+            assert.deepEqual(disponibilidad.cuerpo.at(-1), { inicio: hora('15:40'), fin: hora('16:00') });
+            assert.deepEqual(await consultar(rutaAgenda), { estado: 200, cuerpo: [] });
+
+            const reservar = inicio => consultar('/turnos', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                pacienteId: 'paciente-demo-1', prestacionId: 'consulta-general', inicio,
+              }),
+            });
+            const primero = await reservar(hora('08:00'));
+            assert.equal(primero.estado, 201);
+            assert.equal(primero.cuerpo.fin, hora('08:20'));
+
+            const segundo = await reservar(hora('08:20'));
+            assert.equal(segundo.estado, 201);
+            assert.equal(segundo.cuerpo.fin, hora('08:40'));
+
+            const repetido = await reservar(hora('08:00'));
+            assert.equal(repetido.estado, 409);
+            assert.equal(repetido.cuerpo.codigo, 'RN-TU-01');
+            assert.match(repetido.cuerpo.mensaje, /elegí otro horario/i);
+
+            const agenda = await consultar(rutaAgenda);
+            assert.equal(agenda.estado, 200);
+            assert.deepEqual(agenda.cuerpo.map(turno => turno.id), [
+              primero.cuerpo.id, segundo.cuerpo.id,
+            ]);
+            assert.deepEqual(agenda.cuerpo.map(turno => turno.inicio), [hora('08:00'), hora('08:20')]);
+            for (const turno of agenda.cuerpo) {
+              assert.equal(turno.paciente.id, 'paciente-demo-1');
+              assert.equal(turno.prestacion.nombre, 'Consulta general');
+              assert.equal(turno.estado, 'RESERVADO');
+            }
+            console.log('README verificado: salud, disponibilidad, dos reservas contiguas, conflicto y agenda.');
+          } finally {
+            if (servidor.exitCode === null && servidor.signalCode === null) servidor.kill();
+            await salida;
+          }
+          JS
