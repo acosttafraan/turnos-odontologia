@@ -1,0 +1,10 @@
+# Built from the Zona of each ficha in CHANGES.md and the risk reviewers.
+# Format: <path> @primary-reviewer @backup-reviewer
+# Primary: Francisco Acosta (leader). Backup: Stefano Senatore.
+# Team rule (in CLAUDE.md / AGENTS.md): pull requests opened by Francisco are reviewed by Stefano.
+/src/agenda/ @acosttafraan @Stefano-8senatore
+/src/api/ @acosttafraan @Stefano-8senatore
+/tests/ @acosttafraan @Stefano-8senatore
+/openspec/ @acosttafraan @Stefano-8senatore
+/knowledge-base/ @acosttafraan @Stefano-8senatore
+/CHANGES.md @acosttafraan @Stefano-8senatore

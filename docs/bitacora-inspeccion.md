@@ -1,0 +1,15 @@
+# Bitácora de inspección
+
+Registro del protocolo de inspección: al terminar cada etapa se decide **Continuar**, **Ajustar** o **Parar**, y se anota qué estaba mal y qué se corrigió. Es una regla dura de [AGENTS.md](../AGENTS.md): al terminar cada etapa se agrega una línea.
+
+> Las líneas del 2026-11-24 las redactó el agente a partir de la sesión de fundación. El equipo debe revisarlas y corregirlas, porque la reflexión escrita se basa en esta bitácora.
+
+| Fecha | Etapa | Decisión | Qué estaba mal | Qué se corrigió |
+|---|---|---|---|---|
+| 2026-11-24 | Etapa 1: `openspec init` y estado de fundación | Continuar | Nada | — |
+| 2026-11-24 | Etapa 2: Discovery | Continuar (con pendiente) | El agente no pudo leer Doctoralia, XIAgenda ni Curve Dental; gesden.com y dendoo.com eran dominios equivocados; las cifras de AgendaPro no coincidían entre sus propias páginas; el precio de Clinicorp era distinto en la home y en la página de planes; DentalSoft y Medesk publican precios sin indicar la moneda. El diferencial "WhatsApp automático" contradecía la decisión de no tener integraciones reales | Se marcaron como "No evidenciado" o "no accesible". El diferencial se redefinió como recordatorio `wa.me` sin costo por mensaje. **Pendiente**: verificar personalmente 5 fuentes y generar el PDF |
+| 2026-11-24 | Etapa 3: Base de conocimiento | Ajustar | La KB supuso un frontend en React por su cuenta, y había 3 reglas que inventó el agente (bloqueo sobre turnos activos, cancelación tardía, reprogramación) | Frontend HTML + CSS + TS sin framework (DD-09). Las 3 reglas quedaron confirmadas por el usuario (DD-10). La política visual se mantiene "off" (DD-11) |
+| 2026-11-24 | Etapa 4: Roadmap | Continuar | — | — |
+| 2026-11-24 | Modo equipo (fundación) | Ajustar | El stack Java + Spring Boot + PostgreSQL elegido en la Etapa 3 no era el del equipo. El roadmap tenía un solo change OPSX conducido por el líder. Faltaban los usuarios de GitHub | Stack cambiado a TypeScript nativo en Node ≥ 22.18 sin dependencias (DD-12 a DD-15). Un change OPSX por integrante (DD-16). KB y CHANGES.md actualizados. Se completaron `team.json` y CODEOWNERS |
+| 2026-11-24 | Etapa 5: Skills y reglas del agente | Ajustar | Las reglas candidatas de proceso no reflejaban cómo trabaja el equipo. La skill `node` indica Node ≥ 22.19 para correr TS sin flag, mientras que la KB decía ≥ 22.18 | Las reglas de proceso se reemplazaron por las del equipo (identidad git propia, `master` solo por PR, esta bitácora). Se instalaron `tdd` y `node`. La discrepancia de versión quedó en PA-16 |
+| 2026-11-25 | Roadmap (replanificación por tiempo) | Ajustar | El plan tenía 3 changes para Francisco (scaffolding, crear-turno, readme), con un camino crítico de 4 pasos que no entraba en el tiempo disponible | Un único change por integrante (DD-17). C-01 y C-19 se retiraron y absorbieron: el proyecto base y el README inicial quedan dentro de `crear-turno-sin-solapamientos`, y cada PR suma su sección al README. Camino crítico de 2 pasos |
