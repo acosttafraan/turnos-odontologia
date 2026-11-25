@@ -148,7 +148,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 > `crear-turno-sin-solapamientos` va primero. Cuando se mergea, los otros tres arrancan en paralelo.
 
 ### [C-07] `crear-turno-sin-solapamientos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado. Mergeado en `master` con el [PR #1](https://github.com/acosttafraan/turnos-odontologia/pull/1) (`4814316`), revisado y aprobado por Stefano el 2026-11-25. Archivado en `openspec/changes/archive/2026-11-25-crear-turno-sin-solapamientos/`.
 - **Resultado**: siguiendo el `README.md`, `node src/main.ts` levanta la API local. El paciente consulta horarios por fecha y prestación con `GET /api/v1/disponibilidad` y confirma con `POST /api/v1/turnos`. El POST vuelve a validar el horario y crea un turno `RESERVADO` o rechaza con 409/422 y el código RN cuando corresponda. `GET /api/v1/turnos?fecha=` lista la agenda del día. `node --test` está en verde con un test por escenario del spec.
 - **Depende de**: ninguna
 - **Zona**: package.json, README.md, .env.example, src/main.ts, src/agenda/, src/infra/, src/api/, tests/agenda/, tests/api/, openspec/
