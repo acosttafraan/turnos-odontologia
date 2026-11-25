@@ -94,9 +94,10 @@ type Recordatorio = { id: string; turnoId: string; enlace: string; generadoEn: s
 
 Están en `src/infra/semilla.ts`. Todos los datos son ficticios (RN-DA-01):
 
-- Consultorio "Consultorio Demo", con dirección ficticia y 24 h de anticipación.
-- Horario de lunes a viernes, de 09:00 a 13:00 y de 15:00 a 19:00.
-- Prestaciones: Consulta (30 min), Limpieza (45), Arreglo (60), Extracción (60), Control (15).
-- Tres pacientes ficticios, con DNI de prueba (`00000001`, `00000002`, `00000003`) y teléfonos de ejemplo.
+- Consultorio "Consultorio Demo" (`consultorio-demo`), con dirección ficticia, zona horaria `America/Argentina/Buenos_Aires` y 24 h de anticipación para cancelar.
+- Una franja de lunes a viernes, de 08:00 a 16:00, hora de Buenos Aires.
+- Una prestación activa, "Consulta general" (`consulta-general`), de 20 minutos.
+- Tres pacientes ficticios (`paciente-demo-1`, `paciente-demo-2`, `paciente-demo-3`), con DNI de prueba (`00000001`, `00000002`, `00000003`) y teléfonos de ejemplo.
+- Un bloqueo de ejemplo de 13:00 a 13:20 en el primer día hábil posterior al arranque.
 
 El change `crear-turno-sin-solapamientos` usa estos datos para no depender de los CRUD de configuración y pacientes, que quedan en el backlog.

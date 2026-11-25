@@ -1,0 +1,10 @@
+{
+  "name": "turnos-odontologia",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.18.0" },
+  "scripts": {
+    "start": "node src/main.ts",
+    "test": "node --test"
+  }
+}
