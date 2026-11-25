@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { listarAgendaDiaria } from '../agenda/agenda-diaria.ts';
+import { cancelarTurno } from '../agenda/cancelar-turno.ts';
 import { crearTurno } from '../agenda/crear-turno.ts';
 import type { EntradaTurno } from '../agenda/crear-turno.ts';
 import { ReglaNegocioError } from '../agenda/errores.ts';
@@ -38,5 +39,14 @@ export function registrarTurnos(router: ReturnType<typeof crearRouter>, agenda: 
   router.registrar('POST', '/api/v1/turnos', async solicitud => {
     const entrada = validarEntrada(await leerJson(solicitud));
     return { estado: 201, cuerpo: crearTurno(agenda, entrada, randomUUID) };
+  });
+
+  // cancelar-turno-y-liberar-horario (C-10): RN-CA-01 a RN-CA-04.
+  router.registrar('POST', '/api/v1/turnos/:id/cancelar', (_solicitud, _url, params) => {
+    const cancelado = cancelarTurno(agenda, params.id);
+    if (!cancelado) {
+      throw new ErrorHttp(404, 'TURNO_INEXISTENTE', 'No existe un turno con ese identificador.');
+    }
+    return { estado: 200, cuerpo: cancelado };
   });
 }
