@@ -50,6 +50,6 @@
 ## 5. Verificación integrada
 
 - [x] 5.1 C07-15 — Consultar el mismo horario libre para dos pacientes ficticios, enviar sus POST en paralelo y comprobar un `201`, un `409 RN-TU-01` con indicación de elegir otro horario y un único turno en el GET diario para el paciente que recibió `201` (RN-TU-10).
-- [ ] 5.2 Ejecutar `node --test` en Windows y Linux y verificar el arranque y los ejemplos del README en un clon limpio. Confirmar que el entorno de prueba y la evidencia usen datos ficticios.
+- [x] 5.2 Ejecutar `node --test` en Windows y Linux y verificar el arranque y los ejemplos del README en un clon limpio. Confirmar que el entorno de prueba y la evidencia usen datos ficticios.
 
 Los identificadores `C07-NN` corresponden al [spec de agenda](specs/agenda-turnos/spec.md). Usar al menos un test por escenario y poner el código RN en el nombre cuando corresponda.
