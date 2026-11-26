@@ -262,7 +262,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-08, §DD-10
 
 ### [C-17] `pantalla-agenda-diaria`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` implementado, verificado en Windows y Ubuntu y archivado. Pendiente integración del PR.
 - **Resultado**: en `http://127.0.0.1:3000/agenda.html` se ve la agenda de un día: franjas de atención, bloqueos y turnos con paciente, prestación y estado. Se navega a los días anterior y siguiente. Las funciones de presentación tienen tests en verde.
 - **Depende de**: C-07
 - **Zona**: src/web/, src/api/estaticos.ts, tests/web/, openspec/

@@ -1,0 +1,31 @@
+name: Verificar C-17
+
+on:
+  push:
+    branches:
+      - C-17-pantalla-agenda-diaria
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu:
+    name: Ubuntu · Node 22.18.0
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Preparar Node.js 22.18.0
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.18.0'
+          package-manager-cache: false
+
+      - name: Ejecutar la suite, incluida la carga HTTP de los módulos web
+        run: |
+          test "$(node --version)" = "v22.18.0"
+          node --test

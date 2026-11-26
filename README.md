@@ -102,3 +102,12 @@ En Linux, cancelá un turno con su `id`:
 ```sh
 curl -i -X POST http://127.0.0.1:3000/api/v1/turnos/ID-DEL-TURNO/cancelar
 ```
+
+### C-17 · Cómo probar: ver la agenda diaria
+
+1. Iniciá el servidor con `node src/main.ts` y abrí [Agenda diaria](http://127.0.0.1:3000/agenda.html).
+2. Usá **Anterior**, **Siguiente** y **Hoy** para navegar. Los días hábiles muestran una franja de 08:00 a 16:00 y los sábados y domingos muestran «Sin atención». El próximo día hábil tiene un bloqueo ficticio de 13:00 a 13:20.
+3. Creá los dos turnos consecutivos de la sección C-07 con una fecha hábil futura. Navegá hasta esa fecha. La tabla muestra las dos filas en orden, con horario, paciente, prestación y estado.
+4. Ejecutá `node --test` para verificar la vista y sus rutas HTTP.
+
+La pantalla usa `GET /api/v1/turnos?fecha=AAAA-MM-DD` para las reservas y `GET /api/v1/agenda-diaria?fecha=AAAA-MM-DD` para las franjas y los bloqueos. Las dos consultas usan el calendario de Buenos Aires.

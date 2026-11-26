@@ -40,7 +40,7 @@
 | PA-09 | ~~Alta~~ Resuelta | Tecnología del frontend: **HTML + CSS + TypeScript sin framework** (DD-09) | — | Usuario, 2026-11-24 |
 | PA-10 | ~~Media~~ Obsoleta | Versión de Spring Boot: ya no aplica (DD-12) | — | — |
 | PA-12 | Alta | Node no chequea tipos. ¿Se acepta trabajar sin chequeo, o se admite `typescript` como **única** devDependency para correr `tsc --noEmit` en el CI? | `crear-turno-sin-solapamientos` (explore) | Equipo |
-| PA-13 | Alta | El navegador no ejecuta TypeScript. ¿El servidor convierte `src/web/*.ts` con `module.stripTypeScriptTypes` (experimental) o el frontend se escribe en JavaScript con JSDoc? | `pantalla-agenda-diaria` | Equipo (Maximiliano) |
+| PA-13 | ~~Alta~~ Resuelta | Node elimina los tipos con `node:module.stripTypeScriptTypes` y devuelve los módulos como JavaScript. Ver [diseño de C-17](../openspec/changes/archive/2026-11-25-pantalla-agenda-diaria/design.md). | `pantalla-agenda-diaria` | Maximiliano |
 | PA-14 | Media | ¿Qué persistencia duradera se usa después del MVP: archivo JSON o `node:sqlite`? ¿Cómo se garantiza entonces RN-TU-10 si hay varios procesos? | Después del TP | Equipo técnico |
 | PA-16 | Alta | La skill `node` (mcollina) indica que en Node 22.x TypeScript corre sin flag desde **22.19+**, y que antes hace falta `--experimental-strip-types`. La KB fija ≥ 22.18. ¿Se sube el mínimo a 22.19 o se agrega el flag a los scripts? Verificarlo con `node --version` en las máquinas del equipo | `crear-turno-sin-solapamientos` (explore) | Equipo |
 | PA-15 | Media | La consigna admite grupos de hasta 3 integrantes y el equipo tiene 4. Confirmarlo con el docente | Entrega | Equipo |

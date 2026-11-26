@@ -1,5 +1,7 @@
 import { consultarDisponibilidad } from '../agenda/disponibilidad.ts';
 import type { Agenda } from '../agenda/puertos.ts';
+import { registrarAgendaDiaria } from './agenda-diaria.ts';
+import { registrarEstaticos } from './estaticos.ts';
 import { ErrorHttp } from './errores.ts';
 import { crearRouter } from './router.ts';
 import { registrarTurnos } from './turnos.ts';
@@ -19,5 +21,7 @@ export function crearServidor(agenda: Agenda) {
     return { estado: 200, cuerpo: consultarDisponibilidad(agenda, fecha, prestacionId) };
   });
   registrarTurnos(router, agenda);
+  registrarAgendaDiaria(router, agenda);
+  registrarEstaticos(router);
   return router.servidor;
 }

@@ -4,7 +4,10 @@ import { ErrorHttp, respuestaError } from './errores.ts';
 
 export const LIMITE_JSON = 16 * 1024;
 
-type Respuesta = { estado: number; cuerpo: unknown };
+// C-17: una respuesta con `tipo` se envía tal cual (HTML, CSS, JS); sin `tipo`, como JSON.
+type Respuesta = { estado: number; cuerpo: unknown; tipo?: undefined } |
+  { estado: number; cuerpo: string; tipo: string };
+// C-10: parámetros de ruta (`:nombre`), que el manejador recibe como tercer argumento.
 export type Parametros = Record<string, string>;
 type Manejador = (solicitud: IncomingMessage, url: URL, params: Parametros) => Respuesta | Promise<Respuesta>;
 type RutaConParametros = { metodo: string; segmentos: string[]; manejar: Manejador };
@@ -79,10 +82,10 @@ export function crearRouter() {
       resultado = respuestaError(error);
     }
 
-    respuesta.setHeader('Content-Type', 'application/json; charset=utf-8');
+    respuesta.setHeader('Content-Type', resultado.tipo ?? 'application/json; charset=utf-8');
     if (resultado.estado === 413) respuesta.setHeader('Connection', 'close');
     respuesta.writeHead(resultado.estado);
-    respuesta.end(JSON.stringify(resultado.cuerpo));
+    respuesta.end(resultado.tipo === undefined ? JSON.stringify(resultado.cuerpo) : resultado.cuerpo);
   });
 
   return {
