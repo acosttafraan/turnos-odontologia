@@ -82,3 +82,90 @@ La API devuelve los turnos ordenados por inicio, con paciente, prestación y est
 4. Ejecutá `node --test` para verificar la vista y sus rutas HTTP.
 
 La pantalla usa `GET /api/v1/turnos?fecha=AAAA-MM-DD` para las reservas y `GET /api/v1/agenda-diaria?fecha=AAAA-MM-DD` para las franjas y los bloqueos. Las dos consultas usan el calendario de Buenos Aires.
+
+### C-11 · Cómo probar: reprogramar un turno
+
+La reprogramación permite cambiar el horario de un turno reservado o confirmado que todavía no comenzó. El turno original queda cancelado en término y se crea un nuevo turno reservado, vinculado al original mediante `reprogramadoDesdeId`.
+
+Con el servidor recién iniciado, reemplazá `AAAA-MM-DD` por una fecha hábil futura y creá un turno a las 09:00.
+
+```powershell
+$fecha = 'AAAA-MM-DD'
+$base = 'http://127.0.0.1:3000/api/v1'
+
+$turno = @{
+  pacienteId = 'paciente-demo-1'
+  prestacionId = 'consulta-general'
+  inicio = "${fecha}T09:00:00-03:00"
+}
+
+$turno | ConvertTo-Json -Compress | curl.exe -sS -w '\nHTTP %{http_code}\n' -H 'Content-Type: application/json' --data-binary '@-' "$base/turnos"
+```
+
+La respuesta esperada es `201`. Copiá el identificador del turno creado y reemplazá `ID_DEL_TURNO` en el siguiente ejemplo.
+
+Reprogramá el turno desplazándolo 15 minutos respecto de su horario original.
+
+```powershell
+$id = 'ID_DEL_TURNO'
+
+$reprogramacion = @{
+  inicio = "${fecha}T09:15:00-03:00"
+}
+
+$reprogramacion | ConvertTo-Json -Compress | curl.exe -sS -w '\nHTTP %{http_code}\n' -X PUT -H 'Content-Type: application/json' --data-binary '@-' "$base/turnos/$id/reprogramar"
+```
+
+La respuesta esperada es `200`, con un nuevo turno de 09:15 a 09:35, en estado `RESERVADO`.
+
+El inicio puede estar fuera de la grilla de disponibilidad, siempre que sea futuro, el turno completo entre en una sola franja de atención y no se superponga con bloqueos ni con otros turnos activos. El turno original se excluye de la comprobación de solapamientos.
+
+Consultá la agenda para verificar el resultado.
+
+```powershell
+curl.exe "$base/turnos?fecha=$fecha"
+```
+
+El turno original debe conservar su horario histórico, quedar en estado `CANCELADO` y tener `tipoCancelacion` igual a `EN_TERMINO`. El nuevo turno debe tener `reprogramadoDesdeId` igual al identificador original.
+
+#### Reprogramar con duración personalizada
+
+Utilizá el identificador del nuevo turno reservado para realizar otra reprogramación, esta vez indicando una duración de 30 minutos.
+
+```powershell
+$id = 'ID_DEL_NUEVO_TURNO'
+
+$reprogramacion = @{
+  inicio = "${fecha}T10:00:00-03:00"
+  duracionMinutos = 30
+}
+
+$reprogramacion | ConvertTo-Json -Compress | curl.exe -sS -w '\nHTTP %{http_code}\n' -X PUT -H 'Content-Type: application/json' --data-binary '@-' "$base/turnos/$id/reprogramar"
+```
+
+La respuesta esperada es `200`, con un turno de 10:00 a 10:30.
+
+La duración personalizada debe ser un número entero entre 5 y 480 minutos y múltiplo de 5. Si se omite, se utiliza la duración configurada de la prestación, conforme a RN-TU-05. El servidor calcula el fin; no debe enviarse en la solicitud.
+
+#### Respuestas esperadas
+
+| HTTP | Resultado |
+| --- | --- |
+| 200 | Reprogramación exitosa. |
+| 404 | El turno original no existe. |
+| 409 | El destino se superpone con otro turno activo o un bloqueo (RN-TU-01/RN-TU-03). |
+| 422 | La solicitud incumple una regla de validación. |
+
+Ante un error de validación o conflicto, el turno original permanece sin modificaciones y no se crea un nuevo turno.
+
+#### Pruebas automatizadas
+
+```sh
+node --test tests/agenda/reprogramar-turno.test.ts tests/agenda/reprogramar-turno-estado.test.ts tests/agenda/reprogramar-turno-referencias.test.ts
+```
+
+Para ejecutar todas las pruebas del proyecto:
+
+```sh
+node --test
+```

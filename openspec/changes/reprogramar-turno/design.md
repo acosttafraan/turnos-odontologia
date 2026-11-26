@@ -8,14 +8,14 @@ El modelo `Turno` contiene `duracionMinutos`, `estado`, `tipoCancelacion`, `repr
 
 ## Flujo propuesto
 
-1. La API valida el cuerpo `{ inicio, duracionMinutos? }`, busca el turno por id y responde 404 si no existe.
+1. La API valida el cuerpo `{ inicio, duracionMinutos? }`. El caso de uso busca el turno por id y la API responde 404 si no existe.
 2. El caso de uso comprueba que el turno original se pueda reprogramar según su estado y momento de inicio.
-3. Calcula el turno nuevo antes de la primera escritura. Si no se envió `duracionMinutos`, conserva la duración original, pendiente de confirmar con el líder por apartarse de RN-TU-05.
-4. Ejecuta las validaciones de agenda que usa la creación, excluyendo al original del chequeo de RN-TU-01.
-5. En el caso de uso, vuelve a comprobar conflictos y persiste el original cancelado y el turno nuevo en un tramo síncrono, sin `await` entre la verificación de solapamiento y las escrituras.
+3. Calcula el turno nuevo antes de la primera escritura. Si se envía `duracionMinutos`, valida su valor conforme a RN-TU-05. Si se omite, utiliza la duración por defecto de la prestación.
+4. Ejecuta las validaciones de referencias, inicio futuro, franja de atención y bloqueos. A diferencia de la creación, la reprogramación permite elegir un inicio fuera de la grilla de horarios ofrecidos.
+5. Comprueba los solapamientos excluyendo al turno original y persiste el original cancelado y el turno nuevo en un tramo síncrono, sin `await` entre la verificación de solapamiento y las escrituras.
 6. La API responde 200 con el turno nuevo.
 
-Las validaciones de horario, bloqueos, pasado, duración y referencias conservan los códigos RN-TU correspondientes. Un error previo a la persistencia no cambia el original.
+Las validaciones de horario, bloqueos, pasado, duración y referencias conservan los códigos RN-TU correspondientes. Un error previo a la persistencia no cambia el original ni crea un turno nuevo.
 
 ## Decisiones
 
@@ -28,12 +28,15 @@ Las validaciones de horario, bloqueos, pasado, duración y referencias conservan
 - Ventajas: sigue la restricción de F-03; coincide con RN-CA-03 sobre turnos ya iniciados y RN-TU-08 sobre estados finales; evita alterar historial cerrado.
 - Costos: distingue dos causas con códigos distintos, que el cliente debe presentar.
 
-### 2. Duración del turno nuevo si no se envía `duracionMinutos`
+### 2. Duración del turno nuevo
 
-**Decisión: opción A — conservar la duración del turno original. Pendiente de confirmar con el líder.**
+**Decisión confirmada con el líder: utilizar la duración por defecto de la prestación si no se envía `duracionMinutos`.**
 
-- Ventajas: mover el turno conserva el tiempo que ya estaba reservado, incluso si cambió la duración por defecto de la prestación.
-- Costos: se aparta de RN-TU-05, que establece que si no se indica duración se usa la duración de la prestación. El líder debe confirmar esta especialización para la reprogramación.
+- Si se indica una duración, debe ser un número entero entre 5 y 480 minutos inclusive y múltiplo de 5, conforme a RN-TU-05.
+- Si se omite, se utiliza la duración configurada de la prestación.
+- El fin se calcula en el servidor conforme a RN-TU-06.
+- Ventajas: cumple RN-TU-05 y mantiene la coherencia con las reglas de agenda.
+- Costos: la duración del nuevo turno puede diferir de la original si cambió la duración de la prestación o se solicita una duración personalizada.
 
 ### 3. Estado del turno nuevo
 
@@ -52,6 +55,32 @@ Las validaciones de horario, bloqueos, pasado, duración y referencias conservan
 - Costos: la secuencia síncrona de escrituras depende de las operaciones que ya exponen los puertos; si no alcanza para sostener la garantía, habrá que coordinar cualquier cambio de puertos con el dueño de C-07.
 - La garantía aplica al proceso Node único y a persistencia síncrona en memoria. Si se requiere cambiar puertos, se coordina con el dueño de C-07. Si la persistencia pasa a varios procesos, hará falta una garantía compartida como una transacción o restricción (RN-TU-10, PA-14).
 
+### 5. Inicio fuera de la grilla de horarios
+
+**Decisión confirmada con el líder: permitir la reprogramación a un inicio que no coincida con la grilla de horarios ofrecidos para la prestación.**
+
+El odontólogo puede elegir un nuevo inicio siempre que:
+
+- Sea estrictamente posterior al momento actual (RN-TU-04).
+- El turno completo entre en una única franja de atención (RN-TU-02).
+- No se superponga con bloqueos de agenda (RN-TU-03).
+- No se superponga con otros turnos activos, excluyendo el turno original (RN-TU-01).
+- La duración cumpla RN-TU-05.
+
+Esta decisión no modifica las restricciones de la creación de turnos de C-07.
+
+Se incorporará un test que compruebe que es posible desplazar un turno 15 minutos, incluso cuando el nuevo inicio no coincide con la grilla y se superpone únicamente con el turno original.
+
+### 6. Integración con el router
+
+**Decisión confirmada con el líder: reutilizar el soporte de rutas dinámicas incorporado por C-10 en el PR #3.**
+
+- Se avanzará primero con el caso de uso y sus tests de dominio.
+- Una vez fusionado el PR #3 en master, se actualizará la rama de C-11.
+- Se reutilizará el soporte de parámetros `:id` para registrar la ruta de reprogramación.
+- C-11 no modificará el router ni duplicará la implementación de rutas dinámicas.
+- Esta dependencia corresponde únicamente a la integración HTTP y no al caso de uso de cancelación de C-10.
+
 ## API
 
 `PUT /api/v1/turnos/{id}/reprogramar`
@@ -63,7 +92,7 @@ Cuerpo: `{ inicio: string, duracionMinutos?: number }`. El cliente no envía `fi
 - 409: conflicto de agenda (`RN-TU-01` o `RN-TU-03`).
 - 422: validación de destino u original no reprogramable.
 
-## Archivos previstos para implementación futura
+## Archivos previstos para implementación
 
 - `src/agenda/reprogramar-turno.ts`
 - `src/api/turnos.ts`
