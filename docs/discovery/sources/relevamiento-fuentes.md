@@ -3,20 +3,20 @@
 - **Fecha de consulta de todas las fuentes**: 2026-11-24
 - **Método**: lectura automatizada (WebFetch) de sitios oficiales y páginas de precios, con esquema fijo de `web-scraper`.
 - **Leyenda**: **[C]** = Comprobado (precio publicado, tabla de planes, captura, documentación o video en la página). **[M]** = Afirmación comercial (solo texto de marketing). **No evidenciado** = no aparece en las páginas leídas.
-- **Advertencia**: esta nota es la evidencia cruda del agente. Antes de usarla en el informe final, el equipo debe verificar personalmente al menos 5 fuentes (ver sección "Verificación de fuentes" del informe).
+- **Advertencia**: esta nota contiene la evidencia original del relevamiento automatizado del 24/11/2026 y las actualizaciones de la verificación manual del 25/11/2026. Se revisaron seis fuentes: tres confirmadas, dos parcialmente verificadas y una no accesible. Los resultados están registrados en informe-discovery.md.
 
 ## Fuentes no accesibles (excluidas de la tabla comparativa)
 
 | Producto | URL intentada | Resultado |
 |---|---|---|
-| Doctoralia Pro (Docplanner) | https://pro.doctoralia.com.ar/ ; capterra.com/p/253301 | Conexión rechazada / HTTP 403 |
+| Doctoralia Pro (Docplanner) | https://pro.doctoralia.com.ar/ ; capterra.com/p/253301 | Relevamiento inicial: conexión rechazada / HTTP 403. Verificación manual del 25/11/2026: ERR_TUNNEL_CONNECTION_FAILED. Se mantiene como No evidenciado. |
 | XIAgenda | https://xiagenda.com/ ; capterra.co.il/software/1109063 | Conexión rechazada / HTTP 403 |
 | Curve Dental | https://www.curvedental.com/ ; capterra.com/p/127224 | Conexión rechazada / HTTP 403 |
 | Gesden (Infomed) | https://www.infomed.es/ ; https://www.gesden.com/ | Rechazada / dominio de otra empresa (COPROMA) |
 | Dendoo | https://dendoo.com/ | Dominio de otro producto (comunidades), no software dental |
 | Sultapp | — | Solo aparece en una tesis MBA UdeSA (2024) como proyecto, sin sitio comercial |
 
-Estas fuentes quedan como **pendientes de verificación manual** por el equipo (abrirlas desde un navegador propio).
+Doctoralia fue revisada manualmente el 25/11/2026, pero no se pudo acceder al sitio. Las demás fuentes de esta tabla continúan pendientes de verificación manual y se mantienen como No evidenciado.
 
 ---
 
@@ -38,7 +38,7 @@ Consultorios y clínicas odontológicas de todas las especialidades; multisede [
 - Google Calendar [M]; cita Ley 25.326 y 26.529, AWS, respaldos [M]
 - No evidenciado: periodontograma, bloqueos, sobreturnos, prevención de solapamientos, lista de espera, AFIP/ARCA, obras sociales como función, auditoría, exportación.
 ### Pricing
-"Planes desde $13.900 ARS por mes" según cantidad de profesionales [C, FAQ home]; prueba 14 días sin tarjeta [M]; sin plan gratis [M]; IA se contrata aparte [M].
+Verificación manual del 25/11/2026: Individual $9.900/mes; Básico $19.900/mes; Premium $39.900/mes; Pro IA $129.900/mes. Todos los precios en ARS con IVA incluido [C]. Promoción del plan Individual: $990 durante los primeros tres meses [C]. La prueba gratuita de 14 días, la inexistencia de un plan gratuito y la contratación separada de IA no pudieron confirmarse durante la verificación manual. El precio inicial de $13.900 informado en el relevamiento del 24/11/2026 queda reemplazado por los valores actualizados.
 ### Posicionamiento
 Software todo en uno con IA para clínicas en LATAM.
 ### Diferenciadores
@@ -175,7 +175,7 @@ Consultorios de 1 a 15 profesionales y clínicas multisede; **odontología No ev
 ### Features detectadas
 - Agendas por médico y sede; Google Calendar bloquea la turnera [M]
 - Turnera pública 24 h con seña al reservar (**Mercado Pago**) [M]
-- Recordatorios email incluidos; WhatsApp add-on $19.900 (200 msj) / $29.900 (400 msj) + IVA/mes [C]
+- Recordatorios por email incluidos según el relevamiento inicial [C]. WhatsApp como add-on pago: durante la verificación manual del 25/11/2026 no se pudieron confirmar su disponibilidad ni sus precios. Los importes del relevamiento inicial quedan como No evidenciado en la verificación manual.
 - Facturación **ARCA** con CAE desde bandeja de turnos atendidos [M]
 - Caja del día, estadísticas, roles (secretaria/médico), auditoría inmutable 15 años [M]
 - Declara Ley 25.326, 26.529, 27.553 y ReNaPDiS N° 292 (no verificado en el listado oficial) [M]; cifrado AES-256-GCM [M]
@@ -399,3 +399,13 @@ Consultorios argentinos [M].
 (no publicado)
 ### Notas del investigador
 Evidencia muy pobre; requiere verificación manual antes de puntuarlo.
+
+---
+
+## Verificación manual del 25/11/2026
+
+- **DentalSoft:** se confirmó la afirmación sobre sobreturnos con detección automática de solapamiento y su origen argentino.
+- **Doctocliq:** se confirmaron los cuatro planes de USD 0, 19, 29 y 49 mensuales, y la disponibilidad de odontograma y periodontograma en todos los planes.
+- **Dentalink:** se confirmó la disponibilidad de odontograma y periodontograma en todos los planes y la modalidad de precios por cotización.
+
+No se requirieron correcciones en estas tres fuentes respecto de los datos verificados.
