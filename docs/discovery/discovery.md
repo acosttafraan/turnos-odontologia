@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-11-24
 **Fuentes investigadas**: 16 sistemas, con la evidencia en [`sources/relevamiento-fuentes.md`](sources/relevamiento-fuentes.md). El análisis completo (secciones A-D) está en [`informe-discovery.md`](informe-discovery.md).
-**Estado**: el usuario confirmó el resumen (gate de discovery-research). Falta que el equipo verifique personalmente las fuentes.
+**Estado**: el usuario confirmó el resumen (gate de discovery-research). Se realizó la verificación manual de siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó el centro de ayuda oficial de Dentalink como fuente de documentación técnica. Los resultados se registraron en informe-discovery.md.
 
 ## 1. Problema que resuelve
 
@@ -10,7 +10,7 @@ El odontólogo que atiende solo maneja su agenda con WhatsApp manual, papel o pl
 
 - **Pensadas para clínicas:** Dentalink, Clinicorp y Simples Dental.
 - **Médicas generalistas, sin odontología:** DrApp y MedicAI.
-- **Con WhatsApp como costo extra:** DrApp, MedicAI y DentalSoft.
+- **Con WhatsApp como costo extra:** DrApp y DentalSoft. En MedicAI no se pudo verificar el costo adicional de WhatsApp.
 
 ## 2. Usuarios / roles
 
@@ -30,7 +30,7 @@ El odontólogo que atiende solo maneja su agenda con WhatsApp manual, papel o pl
 | Competidor | Problema que resuelve | Pricing | Diferenciadores |
 |---|---|---|---|
 | DentalSoft (AR) | Agenda, historia clínica y obras sociales para odontología | Gestión $30.000 / Pro $60.000 por profesional y mes (moneda no indicada) | Obras sociales + Mercado Pago + WhatsApp; solapamientos declarados (Comercial) |
-| AgendaPro (AR/LatAm) | Turnos, fichas, pagos e IA en WhatsApp | Desde $13.900 ARS por mes | Agenda por sillón, IA conversacional |
+| AgendaPro (AR/LatAm) | Turnos, fichas, pagos e IA en WhatsApp | Individual $9.900 / Básico $19.900 / Premium $39.900 / Pro IA $129.900 por mes (ARS, IVA incluido) | Agenda por sillón, IA conversacional |
 | DrApp (AR) | Gestión de consultorio médico con ARCA y Mercado Pago | $33.999 a $45.999 por agenda y mes + IVA | Marketplace Crontu, recetas electrónicas |
 | MedicAI (AR) | Consultorio médico con ARCA y cumplimiento normativo | $25.900 + IVA por profesional y mes | Leyes 25.326, 26.529 y ReNaPDiS declaradas |
 | Doctocliq (LatAm) | Gestión dental con IA en WhatsApp | USD 0 / 19 / 29 / 49 por mes | Plan gratis, odontograma y periodontograma Comprobados |
@@ -38,7 +38,7 @@ El odontólogo que atiende solo maneja su agenda con WhatsApp manual, papel o pl
 
 **Notas**:
 - El análisis completo de los 16 sistemas y la puntuación están en el informe.
-- No se pudieron leer Doctoralia, XIAgenda ni Curve Dental: quedan para verificación manual.
+- Doctoralia tampoco fue accesible durante la verificación manual (ERR_TUNNEL_CONNECTION_FAILED). XIAgenda y Curve Dental continúan pendientes de verificación manual. Los tres se mantienen como No evidenciado.
 
 ## 5. Funcionalidades necesarias
 
@@ -85,7 +85,7 @@ Se dejan para etapas posteriores:
 
 ## 9. Restricciones
 
-- Es un trabajo práctico universitario, hecho por un grupo de 2 a 3 integrantes con un plazo de entrega acotado (fecha TBD).
+- Es un trabajo práctico universitario, realizado por un equipo de cuatro integrantes con un plazo de entrega acotado (fecha TBD).
 - No se usan datos reales de pacientes.
 - Hay que respetar la Ley 25.326 (protección de datos personales) y la Ley 26.529 (derechos del paciente) en el diseño.
 - El stack tecnológico no está definido: se decide en la Knowledge Base.
@@ -105,7 +105,7 @@ Se dejan para etapas posteriores:
 - ¿Se registra la obra social del paciente en el MVP, aunque sea como texto?
 - ¿Cuál es el precio objetivo para el independiente?
 - ¿En qué moneda cobra DentalSoft? (No evidenciado.)
-- ¿Cuáles son los precios por plan de AgendaPro? La página /precios devolvió 404.
+- ¿AgendaPro ofrece una prueba gratuita de 14 días o un plan gratuito permanente? Los precios de los cuatro planes fueron verificados el 25/11/2026, pero estas condiciones no pudieron confirmarse.
 - ¿Está MedicAI realmente inscripto en ReNaPDiS N° 292? No se verificó en el listado oficial.
 - ¿Qué funcionalidades tiene realmente Reservo? (Evidencia mínima.)
 - Doctoralia, XIAgenda y Curve Dental: fuentes no accesibles, quedan como No evidenciado.
