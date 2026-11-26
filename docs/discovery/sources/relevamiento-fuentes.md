@@ -3,7 +3,7 @@
 - **Fecha de consulta de todas las fuentes**: 2026-11-24
 - **Método**: lectura automatizada (WebFetch) de sitios oficiales y páginas de precios, con esquema fijo de `web-scraper`.
 - **Leyenda**: **[C]** = Comprobado (precio publicado, tabla de planes, captura, documentación o video en la página). **[M]** = Afirmación comercial (solo texto de marketing). **No evidenciado** = no aparece en las páginas leídas.
-- **Advertencia**: esta nota contiene la evidencia original del relevamiento automatizado del 24/11/2026 y las actualizaciones de la verificación manual del 25/11/2026. Se revisaron seis fuentes: tres confirmadas, dos parcialmente verificadas y una no accesible. Los resultados están registrados en informe-discovery.md.
+- **Advertencia**: esta nota contiene la evidencia original del relevamiento automatizado del 24/11/2026 y las actualizaciones de la verificación manual del 25/11/2026. Se revisaron siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó el centro de ayuda oficial de Dentalink como fuente de documentación técnica. Los resultados están registrados en informe-discovery.md.
 
 ## Fuentes no accesibles (excluidas de la tabla comparativa)
 
@@ -47,7 +47,7 @@ Marketplace de reservas + IA conversacional en WhatsApp [M].
 Cifras de adopción inconsistentes entre páginas: "+30.000 negocios", "+30.000 clínicas en LATAM", "+135.000 profesionales" [M]. Parte del contenido de la página dental llegó resumido, no textual.
 
 ## 2. Dentalink
-- **URL**: https://www.softwaredentalink.com/ ; https://www.softwaredentalink.com/planes
+- **URL**: https://www.softwaredentalink.com/ ; https://www.softwaredentalink.com/planes ; https://ayuda.softwaredentalink.com/es/articles/9493220-como-usar-el-periodontograma
 - **Empresa / país**: Engenis SpA, domicilio Santiago de Chile [C, pie].
 
 ### Problema que resuelve
@@ -57,7 +57,7 @@ Odontólogos independientes, clínicas con varios profesionales y sucursales [M]
 ### Features detectadas
 - Agenda, agendamiento online y confirmación de citas en todos los planes [C, tabla]
 - Multicentro en Pro/Titanium [C]
-- Ficha clínica, **odontograma y periodontograma**, imágenes y documentos, consentimientos en todos los planes [C]
+- Ficha clínica, **odontograma y periodontograma**, imágenes y documentos, consentimientos. La existencia del periodontograma está comprobada mediante el centro de ayuda oficial [C]. Su disponibilidad en todos los planes comerciales no está evidenciada.
 - Análisis de RX con IA, Contact Center IA (WhatsApp y llamadas), API, firma: adicionales [C]
 - Caja, pagos presenciales y online, cuotas [C]; gestión de convenios, cálculo de pago a odontólogos, reportes Excel (Pro+) [C]
 - Campañas email y NPS (Titanium) [C]
@@ -404,8 +404,8 @@ Evidencia muy pobre; requiere verificación manual antes de puntuarlo.
 
 ## Verificación manual del 25/11/2026
 
-- **DentalSoft:** se confirmó la afirmación sobre sobreturnos con detección automática de solapamiento y su origen argentino.
+- **DentalSoft:** se verificó que el proveedor anuncia sobreturnos con detección automática de solapamiento y su origen argentino. La evidencia sobre solapamientos es de carácter comercial; no se realizaron pruebas funcionales del sistema.
 - **Doctocliq:** se confirmaron los cuatro planes de USD 0, 19, 29 y 49 mensuales, y la disponibilidad de odontograma y periodontograma en todos los planes.
-- **Dentalink:** se confirmó la disponibilidad de odontograma y periodontograma en todos los planes y la modalidad de precios por cotización.
+- **Dentalink:** se confirmó la modalidad de precios por cotización y la presencia del odontograma. Se verificó la existencia y el funcionamiento documentado del periodontograma mediante el centro de ayuda oficial, revisado por Martina Vergara. Su disponibilidad en todos los planes comerciales queda como No evidenciado.
 
 No se requirieron correcciones en estas tres fuentes respecto de los datos verificados.

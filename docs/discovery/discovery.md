@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-11-24
 **Fuentes investigadas**: 16 sistemas, con la evidencia en [`sources/relevamiento-fuentes.md`](sources/relevamiento-fuentes.md). El análisis completo (secciones A-D) está en [`informe-discovery.md`](informe-discovery.md).
-**Estado**: el usuario confirmó el resumen (gate de discovery-research). Se realizó la verificación manual de seis fuentes: tres confirmadas, dos parcialmente verificadas y una no accesible. Los resultados se registraron en informe-discovery.md.
+**Estado**: el usuario confirmó el resumen (gate de discovery-research). Se realizó la verificación manual de siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó el centro de ayuda oficial de Dentalink como fuente de documentación técnica. Los resultados se registraron en informe-discovery.md.
 
 ## 1. Problema que resuelve
 

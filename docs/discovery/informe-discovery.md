@@ -6,7 +6,7 @@
 | **Proyecto** | turnos-odontologia |
 | **Integrantes** | Francisco Acosta, Stefano Senatore, Martina Vergara y Maximiliano Moreno |
 | **Fecha de relevamiento** | 2026-11-24 |
-| **Estado del documento** | Revisado por el equipo. Verificación manual de seis fuentes: tres confirmadas, dos parcialmente verificadas y una no accesible. Documentos complementarios actualizados y capturas de evidencia guardadas en sources/capturas/. |
+| **Estado del documento** | Revisado por el equipo. Verificación manual de siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó documentación de un centro de ayuda oficial. Documentos complementarios actualizados y capturas de evidencia guardadas en sources/capturas/. |
 
 > **Convenciones.** **Comprobado**: la funcionalidad la muestra el producto (precio publicado, tabla de planes, captura de pantalla, documentación o video oficial). **Comercial**: afirmación del proveedor sin demostración. **No evidenciado**: no aparece en ninguna fuente pública consultada; nunca se completa por deducción. La evidencia cruda por sistema está en [`sources/relevamiento-fuentes.md`](sources/relevamiento-fuentes.md).
 
@@ -84,7 +84,7 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 | 5 | MrTurno | No evidenciado / No evidenciado | No evidenciado | No evidenciado | No evidenciado |
 | 6 | Reservo | No evidenciado / No evidenciado | Comercial · Comercial · No evidenciado | No evidenciado | No evidenciado |
 | 7 | Doctocliq | Comprobado / Comprobado | No evidenciado · No evidenciado (factura solo PE/MX/CO/EC) · No evidenciado | USD 0 / 19 / 29 / 49 por mes (Comprobado) | 7 días / plan gratis permanente (Comprobado) |
-| 8 | Dentalink | Comprobado / Comprobado | No evidenciado · No evidenciado · No evidenciado ("convenios") | Solo por cotización (Comprobado) | No evidenciado |
+| 8 | Dentalink | Comprobado / Comprobado (centro de ayuda oficial; cobertura por plan no evidenciada) | No evidenciado · No evidenciado · No evidenciado ("convenios") | Solo por cotización (Comprobado) | No evidenciado |
 | 9 | Medilink | No evidenciado / No evidenciado | No evidenciado | Solo por cotización (Comprobado) | No evidenciado |
 | 10 | Dentidesk | Comercial / No evidenciado (ficha de periodoncia, Comercial) | No evidenciado | No evidenciado | 15 días (Comercial) |
 | 11 | Medesk | Comercial / No evidenciado | No evidenciado | Pro "$16/mes por 50 citas", moneda no indicada (Comprobado) | 7 días / plan gratis (Comprobado) |
@@ -205,16 +205,17 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 
 ## Verificación de fuentes
 
-> **Verificación manual realizada por el equipo el 25/11/2026.** Se revisaron seis fuentes: tres confirmadas, dos parcialmente verificadas y una no accesible. Los resultados se detallan en la siguiente tabla. Las capturas de evidencia se encuentran en `sources/capturas/`.
+> **Verificación manual realizada por el equipo el 25/11/2026.** Se revisaron siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó documentación del centro de ayuda oficial de Dentalink para ampliar la variedad de fuentes verificadas. Los resultados se detallan en la siguiente tabla. Las capturas de evidencia se encuentran en `sources/capturas/`.
 
 | # | Tipo de fuente | URL | Qué afirma este informe | ¿Está en la URL? (sí / no / parcial) | Qué encontraron | Corrección aplicada | Verificó (nombre, fecha) |
 |---|---|---|---|---|---|---|---|
-| 1 | Sitio oficial | https://dentalsoft.com.ar/ | Sobreturnos con detección automática de solapamiento; hecho en Argentina | Sí | Se confirmó la información indicada sobre sobreturnos y origen argentino. | Ninguna. | Martina Vergara, 2026-11-25 |
+| 1 | Sitio oficial (comercial) | https://dentalsoft.com.ar/ | Sobreturnos con detección automática de solapamiento; hecho en Argentina | Sí | El proveedor anuncia la detección automática de solapamientos y su origen argentino. No se comprobó el funcionamiento mediante una prueba del sistema. | Se precisó el carácter comercial de la evidencia. | Martina Vergara, 2026-11-25 |
 | 2 | Página de precios | https://www.doctocliq.com/planes-y-precios | Planes de USD 0, 19, 29 y 49 por mes; odontograma y periodontograma en todos los planes | Sí | Se confirmaron los precios y las funcionalidades indicadas. | Ninguna. | Martina Vergara, 2026-11-25 |
 | 3 | Página de precios | https://www.medicai.com.ar/ | Premium $25.900 + IVA; WhatsApp como add-on de $19.900 o $29.900 | Parcial | Se encontró el plan Premium, pero no se pudieron verificar los precios adicionales de WhatsApp. | Se retiraron los importes no verificados y se corrigieron las afirmaciones del resumen ejecutivo y las secciones A.2 y C.2. | Martina Vergara, 2026-11-25 |
-| 4 | Tabla de planes / funcionalidades | https://www.softwaredentalink.com/planes | Odontograma y periodontograma en todos los planes; precio solo por cotización | Sí | Se confirmaron las funcionalidades y la modalidad de cotización. | Ninguna. | Martina Vergara, 2026-11-25 |
+| 4 | Página oficial de planes | https://www.softwaredentalink.com/planes | Odontograma y periodontograma en todos los planes; precios por cotización | Parcial | Se confirmó la modalidad por cotización y la presencia del odontograma. La disponibilidad del periodontograma en todos los planes no está evidenciada. | Se corrigió el alcance de la afirmación sobre el periodontograma por plan. | Martina Vergara, 2026-11-25 |
 | 5 | Sitio oficial | https://agendapro.com/ar | Planes desde $13.900 ARS por mes; prueba de 14 días; sin plan gratis | Parcial | Individual $9.900; Básico $19.900; Premium $39.900; Pro IA $129.900. Precios en ARS con IVA incluido. Promoción Individual de $990 durante los primeros tres meses. No se pudo verificar la prueba de 14 días ni la inexistencia de un plan gratuito. | Se actualizaron los precios, se incorporó la promoción y se aclararon los datos no verificados en A.3 y C.4. | Martina Vergara, 2026-11-25 |
 | 6 | Fuente no accesible al agente | https://pro.doctoralia.com.ar/ | No evidenciado (no se pudo leer) | No verificable | El sitio presentó el error ERR_TUNNEL_CONNECTION_FAILED. Tampoco se pudo acceder al sitio principal. | Se mantiene como no evidenciado. | Martina Vergara, 2026-11-25 |
+| 7 | Centro de ayuda oficial | [Centro de ayuda](https://ayuda.softwaredentalink.com/es/articles/9493220-como-usar-el-periodontograma) | Existencia y funcionamiento del periodontograma | Sí | El artículo documenta el acceso desde la ficha clínica, el registro de profundidad del surco y margen, el cálculo del NIC y la comparación de versiones. No especifica su disponibilidad por plan comercial. | Se incorporó una fuente de documentación técnica para respaldar la funcionalidad. | Martina Vergara, 2026-11-25 |
 
 **Hallazgos a registrar para la reflexión:**
 - **Inconsistencias que el agente detectó:** las cifras de AgendaPro no coinciden entre páginas, el precio de Clinicorp es distinto en la home y en la página de planes, y DentalSoft y Medesk no indican la moneda.
@@ -232,7 +233,7 @@ Todas consultadas el 2026-11-24.
 - Clinic Cloud: https://clinic-cloud.com/ · /tarifas · /prueba-gratis · /agenda
 - Clinicorp: https://www.clinicorp.com/ · /planos
 - DentalSoft: https://dentalsoft.com.ar/ · https://www.dentalsoft.com.ar/funcionalidades
-- Dentalink: https://www.softwaredentalink.com/ · /planes
+- Dentalink: https://www.softwaredentalink.com/ · /planes · [Centro de ayuda: ¿Cómo usar el Periodontograma?](https://ayuda.softwaredentalink.com/es/articles/9493220-como-usar-el-periodontograma)
 - Dentally: https://dentally.com/ · https://www.dentally.com/en-gb/pricing · /en-gb/dental-software-features
 - Dentidesk: https://www.dentidesk.com/ · /dentidesk/feature · /dentidesk/solution
 - Doctocliq: https://www.doctocliq.com/ · /planes-y-precios · /software-dental
