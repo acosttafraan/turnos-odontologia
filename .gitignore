@@ -5,3 +5,24 @@
 
 # Secretos locales
 .env
+.env.*
+!.env.example
+
+# Dependencias y compilados
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Logs y configuración local
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/settings.local.json
+
+# Bases de datos locales
+*.sqlite
+*.db
