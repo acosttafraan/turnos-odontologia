@@ -1,10 +1,11 @@
+
 # Propuesta: reprogramar-turno
 
-## Problema
+## Why
 
 El odontólogo necesita mover un turno existente a otro horario sin perder el historial ni permitir reservas incompatibles con las reglas de agenda.
 
-## Resultado
+## What Changes
 
 Agregar `PUT /api/v1/turnos/{id}/reprogramar`. El sistema validará el turno destino con las reglas de creación, excluyendo el original del chequeo de solapamiento. Si la validación resulta satisfactoria, el original quedará cancelado en término y se creará un turno nuevo enlazado a él, en estado `RESERVADO`.
 

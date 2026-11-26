@@ -235,7 +235,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-10
 
 ### [C-11] `reprogramar-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado por Martina el 2026-11-26: 7/7 tareas, 133 pruebas aprobadas y 0 fallidas en Windows. Archivado en `openspec/changes/archive/2026-11-26-reprogramar-turno/`, con 5 requisitos incorporados a `openspec/specs/agenda-turnos/spec.md`. Las 3 especificaciones principales pasaron la validación. Pendiente verificación en Linux e integración mediante PR, que revisa Francisco.
 - **Resultado**: `PUT /api/v1/turnos/{id}/reprogramar` crea el turno nuevo enlazado (`reprogramadoDesdeId`) y cancela el original en término, o rechaza sin modificar nada. Los tests de cada escenario están en verde.
 - **Depende de**: C-07
 - **Zona**: src/agenda/reprogramar-turno.ts, src/api/turnos.ts, tests/agenda/, tests/api/, openspec/
