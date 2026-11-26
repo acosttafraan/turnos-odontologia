@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agenda diaria</title>
+  <link rel="stylesheet" href="/agenda.css">
+  <script type="module" src="/agenda.ts"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Agenda diaria</h1>
+      <time id="fecha"></time>
+      <nav aria-label="Navegar por día">
+        <button id="anterior" type="button">Anterior</button>
+        <button id="hoy" type="button">Hoy</button>
+        <button id="siguiente" type="button">Siguiente</button>
+      </nav>
+    </header>
+    <p id="estado" role="status"></p>
+    <p id="error" role="alert"></p>
+    <div id="jornada" hidden>
+      <section aria-labelledby="titulo-franjas">
+        <h2 id="titulo-franjas">Horario de atención</h2>
+        <ul id="franjas"></ul>
+        <p id="sin-atencion"></p>
+      </section>
+      <section id="seccion-bloqueos" aria-labelledby="titulo-bloqueos" hidden>
+        <h2 id="titulo-bloqueos">Bloqueos</h2>
+        <ul id="bloqueos"></ul>
+      </section>
+      <section aria-labelledby="titulo-turnos">
+        <h2 id="titulo-turnos">Turnos</h2>
+        <p id="sin-turnos"></p>
+        <div class="tabla">
+          <table id="turnos" aria-labelledby="titulo-turnos" hidden>
+            <thead><tr>
+              <th scope="col">Horario</th><th scope="col">Paciente</th>
+              <th scope="col">Prestación</th><th scope="col">Estado</th>
+            </tr></thead>
+            <tbody id="filas"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

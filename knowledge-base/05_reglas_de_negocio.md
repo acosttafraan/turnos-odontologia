@@ -30,7 +30,7 @@ Cada regla tiene un código `RN-{DOMINIO}-{NN}`, que sirve para rastrearla en sp
 - **RN-TU-02, dentro del horario de atención:** el turno completo `[inicio, fin)` debe caer dentro de **una sola** franja de atención del día. No puede cruzar el corte entre franjas, por ejemplo de 13:00 a 15:00.
 - **RN-TU-03, fuera de bloqueos:** el turno no puede superponerse con ningún bloqueo. Se usa la misma fórmula de intervalos que en RN-TU-01.
 - **RN-TU-04, no en el pasado:** el inicio del turno debe ser posterior al momento actual.
-- **RN-TU-05, duración:** si no se indica otra, la duración es la de la prestación. Se puede editar al crear o reprogramar, respetando el rango y el múltiplo de RN-PR-01.
+- **RN-TU-05, duración:** en la reserva del paciente, la duración viene de la prestación y el servidor calcula el fin (RN-TU-06). Al reprogramar, se puede indicar `duracionMinutos` respetando el rango y el múltiplo de RN-PR-01. Si se omite, se usa la duración de la prestación.
 - **RN-TU-06, fin calculado:** `fin = inicio + duración`. El cliente nunca envía `fin`.
 - **RN-TU-07, referencias válidas:** el paciente debe existir y la prestación debe estar activa.
 - **RN-TU-08, transiciones de estado:**
