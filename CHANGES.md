@@ -148,7 +148,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 > `crear-turno-sin-solapamientos` va primero. Cuando se mergea, los otros tres arrancan en paralelo.
 
 ### [C-07] `crear-turno-sin-solapamientos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado. Mergeado en `master` con el [PR #1](https://github.com/acosttafraan/turnos-odontologia/pull/1) (`4814316`), revisado y aprobado por Stefano el 2026-11-25. Archivado en `openspec/changes/archive/2026-11-25-crear-turno-sin-solapamientos/`.
 - **Resultado**: siguiendo el `README.md`, `node src/main.ts` levanta la API local. El paciente consulta horarios por fecha y prestación con `GET /api/v1/disponibilidad` y confirma con `POST /api/v1/turnos`. El POST vuelve a validar el horario y crea un turno `RESERVADO` o rechaza con 409/422 y el código RN cuando corresponda. `GET /api/v1/turnos?fecha=` lista la agenda del día. `node --test` está en verde con un test por escenario del spec.
 - **Depende de**: ninguna
 - **Zona**: package.json, README.md, .env.example, src/main.ts, src/agenda/, src/infra/, src/api/, tests/agenda/, tests/api/, openspec/
@@ -207,7 +207,7 @@ Ramas, con la convención `<id>-slug` de las reglas de equipo: `C-07-crear-turno
 - **Estado**: `[-]` retirado. La API pasa a `crear-turno-sin-solapamientos` (C-07) y la persistencia duradera a `persistencia-duradera` (C-20).
 
 ### [C-10] `cancelar-turno-y-liberar-horario`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado por Stefano el 2026-11-25: 20/20 tasks y `node --test` con 59 pruebas en verde. Archivado en `openspec/changes/archive/2026-11-25-cancelar-turno-y-liberar-horario/`, con la spec principal en `openspec/specs/cancelacion-de-turnos/`. Entra a `master` por PR, que revisa Francisco.
 - **Resultado**: `POST /api/v1/turnos/{id}/cancelar` deja el turno `CANCELADO` (`EN_TERMINO` o `TARDIA`) y el horario queda libre para un turno nuevo. Los tests de cada escenario están en verde.
 - **Depende de**: C-07
 - **Zona**: src/agenda/cancelar-turno.ts, src/api/turnos.ts, tests/agenda/, tests/api/, openspec/

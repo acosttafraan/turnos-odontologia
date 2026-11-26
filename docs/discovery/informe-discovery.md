@@ -4,9 +4,9 @@
 |---|---|
 | **Materia** | Desarrollo de Software — Trabajo Global |
 | **Proyecto** | turnos-odontologia |
-| **Integrantes** | (TBD — completar nombres) |
+| **Integrantes** | Francisco Acosta, Stefano Senatore, Martina Vergara y Maximiliano Moreno |
 | **Fecha de relevamiento** | 2026-11-24 |
-| **Estado del documento** | BORRADOR generado con asistencia de un agente de IA. Pendiente: verificación personal de fuentes por el equipo (sección "Verificación de fuentes") y versión PDF. |
+| **Estado del documento** | Revisado por el equipo. Verificación manual de siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó documentación de un centro de ayuda oficial. Documentos complementarios actualizados y capturas de evidencia guardadas en sources/capturas/. |
 
 > **Convenciones.** **Comprobado**: la funcionalidad la muestra el producto (precio publicado, tabla de planes, captura de pantalla, documentación o video oficial). **Comercial**: afirmación del proveedor sin demostración. **No evidenciado**: no aparece en ninguna fuente pública consultada; nunca se completa por deducción. La evidencia cruda por sistema está en [`sources/relevamiento-fuentes.md`](sources/relevamiento-fuentes.md).
 
@@ -19,7 +19,7 @@
 **Principales hallazgos.**
 1. **Hay funciones que ya son estándar de mercado:** reserva online, recordatorios por WhatsApp o email, odontograma, presupuestos y caja. No diferencian a nadie.
 2. **La prevención de solapamientos casi no está demostrada.** Solo DentalSoft y Simples Dental la mencionan, y únicamente como afirmación comercial. Ningún sistema la muestra funcionando.
-3. **El WhatsApp se cobra aparte.** Es estándar en los líderes, pero en DrApp es un cargo extra, en MedicAI un add-on desde $19.900 + IVA por mes, en DentalSoft cuesta USD 0,026 por mensaje y en Dentidesk figura como "próximamente".
+3. **El WhatsApp puede tener un costo adicional.** Es estándar en los líderes, pero en DrApp es un cargo extra, en MedicAI no se pudo verificar el precio adicional de WhatsApp, en DentalSoft cuesta USD 0,026 por mensaje y en Dentidesk figura como "próximamente".
 4. **El hueco argentino.** Los líderes regionales (Dentalink, Doctocliq, Simples Dental, Clinicorp) no evidencian ARCA, Mercado Pago ni obras sociales. Los argentinos que sí los tienen (DrApp, MedicAI) son médicos generalistas, sin odontograma. Solo DentalSoft combina odontología con obras sociales y Mercado Pago.
 5. **Casi toda la evidencia es comercial.** Las cifras de adopción son autodeclaradas e incluso inconsistentes dentro de un mismo proveedor (AgendaPro).
 
@@ -59,7 +59,7 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 | 1 | DentalSoft | Comercial (24/7, subdominio propio) | Comprobado (WhatsApp manual o automático según plan; email) | Comercial ("detección automática de solapamiento") | No evidenciado | Comercial (feriados) | No evidenciado |
 | 2 | AgendaPro | Comercial (24/7, web, redes, Google) | Comercial (WhatsApp con IA) | No evidenciado | Comercial | No evidenciado | No evidenciado |
 | 3 | DrApp | Comprobado (marketplace Crontu, captura) | Comercial (email; WhatsApp con cargo extra) | No evidenciado | No evidenciado | No evidenciado | No evidenciado |
-| 4 | MedicAI | Comercial (turnera 24 h) | Comprobado (email incluido; WhatsApp como add-on pago) | No evidenciado | No evidenciado | Comercial (vía Google Calendar) | No evidenciado |
+| 4 | MedicAI | Comercial (turnera 24 h) | Comprobado (email incluido); WhatsApp como add-on pago pendiente de verificación  | No evidenciado | No evidenciado | Comercial (vía Google Calendar) | No evidenciado |
 | 5 | MrTurno | Comprobado (lado paciente) | Comercial (aviso en la app) | No evidenciado | No evidenciado | No evidenciado | No evidenciado |
 | 6 | Reservo | Comercial ("turnero online") | No evidenciado | No evidenciado | No evidenciado | No evidenciado | No evidenciado |
 | 7 | Doctocliq | Comprobado (todos los planes) | Comprobado (WhatsApp, 50-150 por mes según plan) | No evidenciado | No evidenciado | No evidenciado | No evidenciado |
@@ -78,13 +78,13 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 | # | Producto | Odontograma / Periodontograma | Mercado Pago · ARCA · Obras sociales | Precio publicado | Prueba / plan gratis |
 |---|---|---|---|---|---|
 | 1 | DentalSoft | Comprobado (captura) / No evidenciado | Comprobado (MP en Pro) · No evidenciado · Comprobado (captura de liquidación OSDE, ilustrativa) | Gestión $30.000; Pro $60.000 por profesional y mes, moneda no indicada | Plan gratis por 3 meses (Comprobado) |
-| 2 | AgendaPro | Comercial / No evidenciado | Comercial · No evidenciado · No evidenciado | "Desde $13.900 ARS por mes" (Comprobado en FAQ); la página /precios dio 404 | 14 días (Comercial) / sin plan gratis |
+| 2 | AgendaPro | Comercial / No evidenciado | Comercial · No evidenciado · No evidenciado | Individual $9.900; Básico $19.900; Premium $39.900; Pro IA $129.900 por mes (ARS, IVA incluido) | Promoción Individual de $990 durante los primeros 3 meses. Prueba gratuita y plan gratis: No verificados. |
 | 3 | DrApp | No evidenciado / No evidenciado | Comprobado (comisión publicada) · Comercial (plan Premium) · Comercial (recetas) | $33.999 a $45.999 por agenda y mes + IVA (Comprobado) | 15 días (Comercial) |
 | 4 | MedicAI | No evidenciado / No evidenciado | Comercial · Comercial · Comercial (lista de prepagas) | $25.900 + IVA por profesional y mes (Comprobado) | 30 días (Comercial) |
 | 5 | MrTurno | No evidenciado / No evidenciado | No evidenciado | No evidenciado | No evidenciado |
 | 6 | Reservo | No evidenciado / No evidenciado | Comercial · Comercial · No evidenciado | No evidenciado | No evidenciado |
 | 7 | Doctocliq | Comprobado / Comprobado | No evidenciado · No evidenciado (factura solo PE/MX/CO/EC) · No evidenciado | USD 0 / 19 / 29 / 49 por mes (Comprobado) | 7 días / plan gratis permanente (Comprobado) |
-| 8 | Dentalink | Comprobado / Comprobado | No evidenciado · No evidenciado · No evidenciado ("convenios") | Solo por cotización (Comprobado) | No evidenciado |
+| 8 | Dentalink | Comprobado / Comprobado (centro de ayuda oficial; cobertura por plan no evidenciada) | No evidenciado · No evidenciado · No evidenciado ("convenios") | Solo por cotización (Comprobado) | No evidenciado |
 | 9 | Medilink | No evidenciado / No evidenciado | No evidenciado | Solo por cotización (Comprobado) | No evidenciado |
 | 10 | Dentidesk | Comercial / No evidenciado (ficha de periodoncia, Comercial) | No evidenciado | No evidenciado | 15 días (Comercial) |
 | 11 | Medesk | Comercial / No evidenciado | No evidenciado | Pro "$16/mes por 50 citas", moneda no indicada (Comprobado) | 7 días / plan gratis (Comprobado) |
@@ -141,7 +141,7 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 ### C.2 Diferenciadores reales (con evidencia Comprobada)
 - **Gestión por sillón.** Solo es Comprobada en Simples Dental (tabla de planes) y en Dentally (precio por sillón).
 - **Plan gratis permanente.** Doctocliq y Medesk, con precio publicado.
-- **Integración argentina.** Comisiones de Mercado Pago publicadas en DrApp, y WhatsApp con precio publicado en MedicAI y DentalSoft.
+- **Integración argentina.** Comisiones de Mercado Pago publicadas en DrApp y WhatsApp con precio publicado en DentalSoft. El precio adicional de WhatsApp en MedicAI no pudo verificarse.
 - **Periodontograma.** Comprobado solo en Dentalink, Doctocliq y Clinic Cloud.
 
 ### C.3 Vacíos frecuentes del mercado argentino
@@ -154,7 +154,7 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 ### C.4 Oportunidades de innovación
 - **Agenda con reglas verificables y documentadas** (solapamiento, horario, bloqueos y cancelación con anticipación configurable), pensada para el profesional que trabaja solo.
 - **Recordatorio por WhatsApp sin costo por mensaje**, con enlace `wa.me` y mensaje prearmado **sin datos clínicos**. Evita el costo y la dependencia de la API de Meta en la primera etapa.
-- **Precio simple para el independiente.** Los productos argentinos cobran por agenda o por profesional entre $25.900 y $60.000 por mes.
+- **Precio simple para el independiente.** Los productos con oferta en Argentina presentan distintos modelos de precios. AgendaPro ofrece planes desde $9.900 ARS mensuales, IVA incluido. Existe una oportunidad de ofrecer un precio accesible y transparente para el odontólogo independiente.
 - **Etapas posteriores con diferencial local:** obras sociales + ARCA + odontograma en un mismo producto, que es el hueco del punto C.3.
 
 ---
@@ -201,18 +201,21 @@ Fecha de consulta de todas las fuentes: **2026-11-24**. El orden es por relevanc
 
 ---
 
+<div class="page"></div>
+
 ## Verificación de fuentes
 
-> **A completar por el equipo, no por el agente.** La consigna exige abrir personalmente al menos 5 fuentes, una de cada tipo, y anotar si lo que el informe afirma está realmente en esa URL. Las filas sugeridas cubren los tipos pedidos.
+> **Verificación manual realizada por el equipo el 25/11/2026.** Se revisaron siete fuentes: tres confirmadas, tres parcialmente verificadas y una no accesible. Se incorporó documentación del centro de ayuda oficial de Dentalink para ampliar la variedad de fuentes verificadas. Los resultados se detallan en la siguiente tabla. Las capturas de evidencia se encuentran en `sources/capturas/`.
 
 | # | Tipo de fuente | URL | Qué afirma este informe | ¿Está en la URL? (sí / no / parcial) | Qué encontraron | Corrección aplicada | Verificó (nombre, fecha) |
 |---|---|---|---|---|---|---|---|
-| 1 | Sitio oficial | https://dentalsoft.com.ar/ | "Sobreturnos con detección automática de solapamiento"; hecho en Argentina | | | | |
-| 2 | Página de precios | https://www.doctocliq.com/planes-y-precios | Planes de USD 0, 19, 29 y 49 por mes; odontograma y periodontograma en todos los planes | | | | |
-| 3 | Página de precios | https://www.medicai.com.ar/ (FAQ y precios) | Premium $25.900 + IVA; WhatsApp como add-on de $19.900 o $29.900 | | | | |
-| 4 | Tabla de planes / funcionalidades | https://www.softwaredentalink.com/planes | Odontograma y periodontograma en todos los planes; precio solo por cotización | | | | |
-| 5 | Sitio oficial (FAQ) | https://agendapro.com/ar | "Planes desde $13.900 ARS por mes"; prueba de 14 días; sin plan gratis | | | | |
-| 6 | Fuente no accesible al agente | https://pro.doctoralia.com.ar/ | No evidenciado (no se pudo leer) | | | | |
+| 1 | Sitio oficial (comercial) | https://dentalsoft.com.ar/ | Sobreturnos con detección automática de solapamiento; hecho en Argentina | Sí | El proveedor anuncia la detección automática de solapamientos y su origen argentino. No se comprobó el funcionamiento mediante una prueba del sistema. | Se precisó el carácter comercial de la evidencia. | Martina Vergara, 2026-11-25 |
+| 2 | Página de precios | https://www.doctocliq.com/planes-y-precios | Planes de USD 0, 19, 29 y 49 por mes; odontograma y periodontograma en todos los planes | Sí | Se confirmaron los precios y las funcionalidades indicadas. | Ninguna. | Martina Vergara, 2026-11-25 |
+| 3 | Página de precios | https://www.medicai.com.ar/ | Premium $25.900 + IVA; WhatsApp como add-on de $19.900 o $29.900 | Parcial | Se encontró el plan Premium, pero no se pudieron verificar los precios adicionales de WhatsApp. | Se retiraron los importes no verificados y se corrigieron las afirmaciones del resumen ejecutivo y las secciones A.2 y C.2. | Martina Vergara, 2026-11-25 |
+| 4 | Página oficial de planes | https://www.softwaredentalink.com/planes | Odontograma y periodontograma en todos los planes; precios por cotización | Parcial | Se confirmó la modalidad por cotización y la presencia del odontograma. La disponibilidad del periodontograma en todos los planes no está evidenciada. | Se corrigió el alcance de la afirmación sobre el periodontograma por plan. | Martina Vergara, 2026-11-25 |
+| 5 | Sitio oficial | https://agendapro.com/ar | Planes desde $13.900 ARS por mes; prueba de 14 días; sin plan gratis | Parcial | Individual $9.900; Básico $19.900; Premium $39.900; Pro IA $129.900. Precios en ARS con IVA incluido. Promoción Individual de $990 durante los primeros tres meses. No se pudo verificar la prueba de 14 días ni la inexistencia de un plan gratuito. | Se actualizaron los precios, se incorporó la promoción y se aclararon los datos no verificados en A.3 y C.4. | Martina Vergara, 2026-11-25 |
+| 6 | Fuente no accesible al agente | https://pro.doctoralia.com.ar/ | No evidenciado (no se pudo leer) | No verificable | El sitio presentó el error ERR_TUNNEL_CONNECTION_FAILED. Tampoco se pudo acceder al sitio principal. | Se mantiene como no evidenciado. | Martina Vergara, 2026-11-25 |
+| 7 | Centro de ayuda oficial | [Centro de ayuda](https://ayuda.softwaredentalink.com/es/articles/9493220-como-usar-el-periodontograma) | Existencia y funcionamiento del periodontograma | Sí | El artículo documenta el acceso desde la ficha clínica, el registro de profundidad del surco y margen, el cálculo del NIC y la comparación de versiones. No especifica su disponibilidad por plan comercial. | Se incorporó una fuente de documentación técnica para respaldar la funcionalidad. | Martina Vergara, 2026-11-25 |
 
 **Hallazgos a registrar para la reflexión:**
 - **Inconsistencias que el agente detectó:** las cifras de AgendaPro no coinciden entre páginas, el precio de Clinicorp es distinto en la home y en la página de planes, y DentalSoft y Medesk no indican la moneda.
@@ -230,7 +233,7 @@ Todas consultadas el 2026-11-24.
 - Clinic Cloud: https://clinic-cloud.com/ · /tarifas · /prueba-gratis · /agenda
 - Clinicorp: https://www.clinicorp.com/ · /planos
 - DentalSoft: https://dentalsoft.com.ar/ · https://www.dentalsoft.com.ar/funcionalidades
-- Dentalink: https://www.softwaredentalink.com/ · /planes
+- Dentalink: https://www.softwaredentalink.com/ · /planes · [Centro de ayuda: ¿Cómo usar el Periodontograma?](https://ayuda.softwaredentalink.com/es/articles/9493220-como-usar-el-periodontograma)
 - Dentally: https://dentally.com/ · https://www.dentally.com/en-gb/pricing · /en-gb/dental-software-features
 - Dentidesk: https://www.dentidesk.com/ · /dentidesk/feature · /dentidesk/solution
 - Doctocliq: https://www.doctocliq.com/ · /planes-y-precios · /software-dental

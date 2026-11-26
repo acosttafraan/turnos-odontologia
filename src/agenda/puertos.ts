@@ -28,6 +28,8 @@ export interface PacientesRepo {
 
 export type Agenda = {
   consultorioId: string;
+  // RN-CF-02: horas mínimas de anticipación para que una cancelación sea en término.
+  anticipacionCancelacionHoras: number;
   turnos: TurnosRepo;
   horarios: HorariosRepo;
   bloqueos: BloqueosRepo;

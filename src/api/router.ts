@@ -4,9 +4,36 @@ import { ErrorHttp, respuestaError } from './errores.ts';
 
 export const LIMITE_JSON = 16 * 1024;
 
+// C-17: una respuesta con `tipo` se envía tal cual (HTML, CSS, JS); sin `tipo`, como JSON.
 type Respuesta = { estado: number; cuerpo: unknown; tipo?: undefined } |
   { estado: number; cuerpo: string; tipo: string };
-type Manejador = (solicitud: IncomingMessage, url: URL) => Respuesta | Promise<Respuesta>;
+// C-10: parámetros de ruta (`:nombre`), que el manejador recibe como tercer argumento.
+export type Parametros = Record<string, string>;
+type Manejador = (solicitud: IncomingMessage, url: URL, params: Parametros) => Respuesta | Promise<Respuesta>;
+type RutaConParametros = { metodo: string; segmentos: string[]; manejar: Manejador };
+
+function segmentosDe(ruta: string): string[] {
+  return ruta.split('/').slice(1);
+}
+
+// Devuelve los parámetros si la ruta coincide con el patrón (segmentos `:nombre`), o undefined.
+function coincidir(patron: string[], ruta: string[]): Parametros | undefined {
+  if (patron.length !== ruta.length) return undefined;
+  const params: Parametros = {};
+  for (let i = 0; i < patron.length; i++) {
+    if (patron[i].startsWith(':')) {
+      if (ruta[i] === '') return undefined;
+      try {
+        params[patron[i].slice(1)] = decodeURIComponent(ruta[i]);
+      } catch {
+        return undefined;
+      }
+    } else if (patron[i] !== ruta[i]) {
+      return undefined;
+    }
+  }
+  return params;
+}
 
 export async function leerJson(solicitud: IncomingMessage): Promise<unknown> {
   const partes: Buffer[] = [];
@@ -30,13 +57,27 @@ export async function leerJson(solicitud: IncomingMessage): Promise<unknown> {
 
 export function crearRouter() {
   const rutas = new Map<string, Manejador>();
+  const rutasConParametros: RutaConParametros[] = [];
+
+  function buscar(metodo: string, ruta: string): { manejar: Manejador; params: Parametros } | undefined {
+    const exacta = rutas.get(metodo + ' ' + ruta);
+    if (exacta) return { manejar: exacta, params: {} };
+    const segmentos = segmentosDe(ruta);
+    for (const candidata of rutasConParametros) {
+      if (candidata.metodo !== metodo) continue;
+      const params = coincidir(candidata.segmentos, segmentos);
+      if (params) return { manejar: candidata.manejar, params };
+    }
+    return undefined;
+  }
+
   const servidor = createServer(async (solicitud, respuesta) => {
     let resultado: Respuesta;
     try {
       const url = new URL(solicitud.url ?? '/', 'http://127.0.0.1');
-      const manejar = rutas.get(solicitud.method + ' ' + url.pathname);
-      if (!manejar) throw new ErrorHttp(404, 'RUTA_INEXISTENTE', 'La ruta no existe.');
-      resultado = await manejar(solicitud, url);
+      const encontrada = buscar(solicitud.method ?? '', url.pathname);
+      if (!encontrada) throw new ErrorHttp(404, 'RUTA_INEXISTENTE', 'La ruta no existe.');
+      resultado = await encontrada.manejar(solicitud, url, encontrada.params);
     } catch (error) {
       resultado = respuestaError(error);
     }
@@ -50,7 +91,11 @@ export function crearRouter() {
   return {
     servidor,
     registrar(metodo: string, ruta: string, manejar: Manejador) {
-      rutas.set(metodo + ' ' + ruta, manejar);
+      if (ruta.includes('/:')) {
+        rutasConParametros.push({ metodo, segmentos: segmentosDe(ruta), manejar });
+      } else {
+        rutas.set(metodo + ' ' + ruta, manejar);
+      }
     },
   };
 }
