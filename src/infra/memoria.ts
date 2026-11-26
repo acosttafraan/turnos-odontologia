@@ -26,6 +26,7 @@ export function crearAgendaEnMemoria(datos: DatosAgenda, reloj: Reloj): Agenda {
 
   return {
     consultorioId: datos.consultorio.id,
+    anticipacionCancelacionHoras: datos.consultorio.anticipacionCancelacionHoras,
     reloj,
     turnos: {
       listarActivosEntre(desde, hasta) {
